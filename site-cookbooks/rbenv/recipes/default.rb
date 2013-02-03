@@ -15,7 +15,8 @@ end
 git "/tmp/ruby-build" do
   repository "git://github.com/sstephenson/ruby-build.git"
   reference "master"
-  action :sync
+  # action :sync
+  action :checkout
 end
 
 bash "install-rubybuild" do
