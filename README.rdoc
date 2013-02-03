@@ -1,6 +1,6 @@
 = DESCRIPTION:
 
-{Opscode Chef}{http://www.opscode.com/chef/} の Vagrant用レシピ。
+{Opscode Chef}[http://www.opscode.com/chef/] の Vagrant用レシピ。
 
 - アプリケーション実行用のユーザーを作る
 - ruby-build と rbenv で home での ruby 環境を構築
@@ -14,7 +14,7 @@
 
 = INSTALLATION:
 
-ローカルのホストOSで{VirtualBox}{https://www.virtualbox.org/}をインストールした後、{Vagrant}{http://www.vagrantup.com/} および chef と knife-solo を入れます。
+ローカルのホストOSで {VirtualBox}[https://www.virtualbox.org/] をインストールした後、{Vagrant}{http://www.vagrantup.com/} をインストールします。また、chef と knife-solo を入れます。
 
     $ gem install vagrant
     $ gem install chef
