@@ -9,6 +9,7 @@
     },
     "recipes":[
         "adduser",
-        "rbenv"
+        "rbenv",
+        "chef"
     ]
 }
