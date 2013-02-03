@@ -63,7 +63,8 @@ nodes/192.168.50.2.json を自分の環境に合わせて編集します。
         },
         "recipes":[
             "adduser",
-            "rbenv"
+            "rbenv",
+            "chef"
         ]
     }
 
@@ -77,5 +78,7 @@ knife で chef-solo を実行して完了です!
     $ sudo su - fiorung
     $ ruby -v
     ruby 1.9.3p362 (2012-12-25 revision 38607) [x86_64-linux]
+    $ which chef-solo
+    ~/.rbenv/shims/chef-solo
 
 It works!
