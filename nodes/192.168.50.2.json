@@ -1,0 +1,14 @@
+{
+    "user":{
+        "name": "fiorung",
+        "group" : "fiorung",
+        "home": "/home/fiorung"
+    },
+    "rbenv":{
+        "version": "1.9.3-p362"
+    },
+    "recipes":[
+        "adduser",
+        "rbenv"
+    ]
+}

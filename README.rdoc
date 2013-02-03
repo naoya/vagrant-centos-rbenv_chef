@@ -1,0 +1,81 @@
+= DESCRIPTION:
+
+{Opscode Chef}{http://www.opscode.com/chef/} の Vagrant用レシピ。
+
+- アプリケーション実行用のユーザーを作る
+- ruby-build と rbenv で home での ruby 環境を構築
+- rbenv 環境での chef-solo を実行可能に
+
+するところまでを整えるものです。
+
+モチベーションとしては、chef-solo は新規で作った専用のユーザーの rbenv で実行したいけれど、その環境を構築するまでも chef-solo で整えたいという bootstrap 的なものです。幸い、vagrant の CentOS VM にはシステムグローバルな ruby で chef-solo が使えますので、それを使って環境構築します。
+
+本レシピ実行以降は、後は煮るなり焼くなり･･･ そのままシステムグローバルな chef を使い続ける方が何かと実は楽なのでは説もありますが･･･。
+
+= INSTALLATION:
+
+ローカルのホストOSで{VirtualBox}{https://www.virtualbox.org/}をインストールした後、{Vagrant}{http://www.vagrantup.com/} および chef と knife-solo を入れます。
+
+    $ gem install vagrant
+    $ gem install chef
+    $ gem install knife-solo
+    $ rbenv rehash
+
+次に、CentOS の VM を準備します。(ゲストは CentOS でなくても動くかもしれないが未検証)
+
+    $ mkdir -p ~/somewhere
+    $ cd ~/somewhere
+    $ vagrant box add centos http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.3-x86_64-v20130101.box
+    $ vagrant init
+
+Vagrantfile を適当に記述します。ここでは VM のアドレスを 192.168.50.2 とします。
+
+    Vagrant::Config.run do |config|
+      config.vm.box = "centos"
+      config.vm.network :hostonly, '192.168.50.2'
+    end
+
+VM を起動します。
+
+    $ vagrant up
+
+vagrant ユーザーで ssh できるよう、~/.ssh/config を編集します。
+
+    Host 192.168.50.2
+        IdentityFile ~/.vagrant.d/insecure_private_key    
+
+同ディレクトリ内に本レポジトリを clone した後、knife chef-solo prepare を実行し下準備します。
+
+    # chef-solo は git clone したディレクトリ
+    $ cd chef-solo
+    $ knife solo prepare vagrant@192.168.50.2
+
+nodes/192.168.50.2.json を自分の環境に合わせて編集します。
+
+    {
+        "user":{
+            "name": "fiorung",
+            "group" : "fiorung",
+            "home": "/home/fiorung"
+        },
+        "rbenv":{
+            "version": "1.9.3-p362"
+        },
+        "recipes":[
+            "adduser",
+            "rbenv"
+        ]
+    }
+
+knife で chef-solo を実行して完了です!
+
+    $ knife solo cook vagrant@192.168.50.2
+
+以下、動作確認の例。
+
+    $ vagrant ssh
+    $ sudo su - fiorung
+    $ ruby -v
+    ruby 1.9.3p362 (2012-12-25 revision 38607) [x86_64-linux]
+
+It works!

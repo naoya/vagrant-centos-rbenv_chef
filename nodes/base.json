@@ -1,0 +1,12 @@
+{
+    "user":{
+        "name": "fiorung",
+        "home": "/home/fiorung"
+    },
+    "recipes":[
+        "adduser",
+        "ruby-build",
+        "rbenv",
+        "chef-solo"
+    ]
+}
