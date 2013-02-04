@@ -104,3 +104,9 @@ work around として、{knife-solo}[https://github.com/matschaffer/knife-solo] 
                ruby -rubygems -e "gem 'chef', '#{CHEF_VERSION_CONSTRAINT}'"
              BASH
              raise "Couldn't find Chef #{CHEF_VERSION_CONSTRAINT} on #{host}. Please run `#{$0} prepare #{ssh_args}` to ensure Chef is installed and up to date." unless result.success?
+
+加えて、rbenv インストールまでの chef のキャッシュが残っていると新しいユーザーでの chef 時に permission で蹴られると思われます。
+
+    % knife solo clean vagrant@192.168.50.2
+
+をあらかじめ実行しておきましょう。
