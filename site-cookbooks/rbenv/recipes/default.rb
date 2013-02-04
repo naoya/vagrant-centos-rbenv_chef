@@ -37,7 +37,6 @@ git node['user']['home'] + "/.rbenv" do
 end
 
 bash "rbenv" do
-  not_if 'which rbenv'
   user node['user']['name']
   group node['user']['group'] 
   cwd node['user']['home']
@@ -52,4 +51,6 @@ bash "rbenv" do
     rbenv versions
     rbenv rehash
   EOC
+
+  not_if { File.exists?(node['user']['home'] + "/.rbenv/shims/ruby") }
 end
